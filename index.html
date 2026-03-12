@@ -280,61 +280,55 @@
 
 <script>
 const GENERAL = `========================================
-GENERAL INFORMATION (All Work Orders)
+GENERAL INFORMATION
 ========================================
-Date & Time of Arrival: _______________
-Unit Number / Property Address: ________
-Resident-Reported Issue: _______________
-Technician's Initial Observations: ____
-___________________________________
-Brand: ___________ Model: ____________
-Serial Number: ________________________
-Age of Unit (approx): _________________
-Condition of Unit: ____________________
-Safety Concerns (if any): _____________
-Tools Used: ___________________________
+Technician's Initial Observations:
+Brand:
+Model:
+Serial Number:
+Age of Unit (approx):
+Condition of Unit:
+Safety Concerns (if any):
+Tools Used:
 Was issue replicated? YES / NO
-Notes: ________________________________`;
+Notes:`;
 
 const CHECKLISTS = {
   refrigerator: {
     title: "🧊 Refrigerator Checklist",
     text: `REFRIGERATOR DIAGNOSTIC CHECKS
 ==============================
-Temperature Reading (fridge): _________
-Temperature Reading (freezer): ________
+Temperature Reading (fridge):
+Temperature Reading (freezer):
 Compressor Running? YES / NO
-Condenser Coil Condition: _____________
+Condenser Coil Condition:
 Evaporator Fan Operating? YES / NO
-Frost Pattern (normal/abnormal): ______
-Door Seals (good/damaged): ____________
-Water/Ice Maker Function: _____________
+Frost Pattern (normal/abnormal):
+Door Seals (good/damaged):
+Water/Ice Maker Function:
 
 REQUIRED PHOTOS (add in AppFolio):
 [ ] Full unit view
 [ ] Model/serial tag
 [ ] Overall condition
 [ ] Visible damage
-[ ] Before photo (before repair)
-[ ] After photo (after repair)
+[ ] Before photo
+[ ] After photo
 [ ] Error codes (if any)
 [ ] Interior condition
 [ ] Leaks (if any)
-[ ] Damaged components (if any)
-
-TECHNICIAN: ___________________________
-DATE: _________________________________`
+[ ] Damaged components (if any)`
   },
   dishwasher: {
     title: "🫧 Dishwasher Checklist",
     text: `DISHWASHER DIAGNOSTIC CHECKS
 =============================
-Water Fill Level (correct/low/high): __
-Heating Element (working/failed): _____
-Spray Arm Rotation (free/blocked): ____
-Drain Pump (operating/failed): ________
-Filter Condition (clean/clogged): _____
-Error Codes Displayed: ________________
+Water Fill Level (correct/low/high):
+Heating Element (working/failed):
+Spray Arm Rotation (free/blocked):
+Drain Pump (operating/failed):
+Filter Condition (clean/clogged):
+Error Codes Displayed:
 
 REQUIRED PHOTOS (add in AppFolio):
 [ ] Full unit view
@@ -347,20 +341,18 @@ REQUIRED PHOTOS (add in AppFolio):
 [ ] Interior condition
 [ ] Leaks (if any)
 [ ] Damaged components (if any)
-
-TECHNICIAN: ___________________________
-DATE: _________________________________`
+`
   },
   oven: {
     title: "🔥 Oven / Range Checklist",
     text: `OVEN / RANGE DIAGNOSTIC CHECKS
 ==============================
 Unit Type: GAS / ELECTRIC
-Igniter Amperage (gas): _______________
-Heating Element Continuity (electric): _
-Burner Flame Color (blue/yellow/none): _
-Temperature Accuracy: _________________
-Control Board Response: _______________
+Igniter Amperage (gas):
+Heating Element Continuity (electric):
+Burner Flame Color (blue/yellow/none):
+Temperature Accuracy:
+Control Board Response:
 
 REQUIRED PHOTOS (add in AppFolio):
 [ ] Full unit view
@@ -372,20 +364,18 @@ REQUIRED PHOTOS (add in AppFolio):
 [ ] Error codes (if any)
 [ ] Interior condition
 [ ] Damaged components (if any)
-
-TECHNICIAN: ___________________________
-DATE: _________________________________`
+`
   },
   washer: {
     title: "🌀 Washer Checklist",
     text: `WASHER DIAGNOSTIC CHECKS
 ========================
-Water Fill Level (correct/low/high): __
+Water Fill Level (correct/low/high):
 Agitation Working? YES / NO
 Spin Cycle Working? YES / NO
-Drain Pump (operating/failed): ________
-Belt Condition (good/worn/broken): ____
-Error Codes Displayed: ________________
+Drain Pump (operating/failed):
+Belt Condition (good/worn/broken):
+Error Codes Displayed:
 Balance Issues Noted? YES / NO
 
 REQUIRED PHOTOS (add in AppFolio):
@@ -399,20 +389,18 @@ REQUIRED PHOTOS (add in AppFolio):
 [ ] Interior condition
 [ ] Leaks (if any)
 [ ] Damaged components (if any)
-
-TECHNICIAN: ___________________________
-DATE: _________________________________`
+`
   },
   dryer: {
     title: "💨 Dryer Checklist",
     text: `DRYER DIAGNOSTIC CHECKS
 =======================
-Airflow Test Result: __________________
-Heating Element / Igniter: ____________
-Drum Rotation (smooth/noisy/stopped): _
-Lint Buildup (none/moderate/heavy): ___
-Thermostat Continuity: ________________
-Thermal Fuse Continuity: ______________
+Airflow Test Result:
+Heating Element / Igniter:
+Drum Rotation (smooth/noisy/stopped):
+Lint Buildup (none/moderate/heavy):
+Thermostat Continuity:
+Thermal Fuse Continuity:
 
 REQUIRED PHOTOS (add in AppFolio):
 [ ] Full unit view
@@ -423,45 +411,44 @@ REQUIRED PHOTOS (add in AppFolio):
 [ ] After photo
 [ ] Lint trap / vent condition
 [ ] Damaged components (if any)
-
-TECHNICIAN: ___________________________
-DATE: _________________________________`
+`
   },
   hvac: {
     title: "❄️ HVAC / AC Checklist",
     text: `HVAC / AC SYSTEM INFORMATION
 ============================
-System Type: _________________________
-Brand: ___________ Model: ____________
-Serial Number: ________________________
-Thermostat Settings: __________________
-Outdoor Temperature: __________________
+System Type:
+Brand:
+Model:
+Serial Number:
+Thermostat Settings:
+Outdoor Temperature:
 
 ELECTRICAL CHECKS
 -----------------
-Breaker Status (on/tripped): __________
-Contactor Condition: __________________
-Capacitor Reading (µF): _______________
-Voltage Reading: ______________________
-Wiring Condition: _____________________
+Breaker Status (on/tripped):
+Contactor Condition:
+Capacitor Reading (µF):
+Voltage Reading:
+Wiring Condition:
 
 AIRFLOW & MECHANICAL
 --------------------
-Filter Condition (clean/dirty/replace): 
-Blower Motor (operating/failed): ______
-Evaporator Coil (clean/dirty/frozen): _
-Condenser Coil Condition: _____________
-Fan Blade Condition: __________________
-Duct Issues Noted: ____________________
+Filter Condition (clean/dirty/replace):
+Blower Motor (operating/failed):
+Evaporator Coil (clean/dirty/frozen):
+Condenser Coil Condition:
+Fan Blade Condition:
+Duct Issues Noted:
 
 REFRIGERANT SYSTEM
 ------------------
-Suction Pressure: _____________________
-Discharge Pressure: ___________________
-Superheat Reading: ____________________
-Subcool Reading: ______________________
-Leak Signs (yes/no/location): _________
-Temperature Split: ____________________
+Suction Pressure:
+Discharge Pressure:
+Superheat Reading:
+Subcool Reading:
+Leak Signs (yes/no/location):
+Temperature Split:
 
 DRAINAGE
 --------
@@ -482,9 +469,7 @@ REQUIRED PHOTOS (add in AppFolio):
 [ ] Model/serial tag
 [ ] Before photo
 [ ] After photo
-
-TECHNICIAN: ___________________________
-DATE: _________________________________`
+`
   }
 };
 
