@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<title>Symphony Tech Tool</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;900&family=Space+Mono:wght@400;700&display=swap');
+
+  :root {
+    --navy: #1a2744;
+    --coral: #E8714A;
+    --sage: #6B8F71;
+    --cream: #FAF7F2;
+    --mid: #8896B0;
+    --border: #dde2ec;
+    --green: #2D7D46;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--navy);
+    min-height: 100vh;
+    padding-bottom: 40px;
+  }
+
+  header {
+    background: var(--navy);
+    color: white;
+    padding: 18px 20px 14px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+  }
+
+  header h1 {
+    font-size: 18px;
+    font-weight: 900;
+    letter-spacing: -0.3px;
+  }
+
+  header p {
+    font-size: 12px;
+    color: var(--mid);
+    margin-top: 2px;
+    font-family: 'Space Mono', monospace;
+  }
+
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--mid);
+    padding: 18px 16px 8px;
+  }
+
+  /* Issue type buttons */
+  .issue-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    padding: 0 14px;
+  }
+
+  .issue-btn {
+    background: white;
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    padding: 16px 10px 14px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.18s ease;
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
+  }
+
+  .issue-btn:active {
+    transform: scale(0.96);
+  }
+
+  .issue-btn.selected {
+    border-color: var(--coral);
+    background: #fff5f1;
+    box-shadow: 0 0 0 3px rgba(232,113,74,0.15);
+  }
+
+  .issue-btn .icon {
+    font-size: 30px;
+    display: block;
+    margin-bottom: 7px;
+  }
+
+  .issue-btn .label {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1.2;
+  }
+
+  /* Checklist output area */
+  .output-section {
+    margin: 18px 14px 0;
+    display: none;
+  }
+
+  .output-section.visible {
+    display: block;
+  }
+
+  .output-card {
+    background: white;
+    border-radius: 16px;
+    border: 1.5px solid var(--border);
+    overflow: hidden;
+  }
+
+  .output-header {
+    background: var(--navy);
+    color: white;
+    padding: 13px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .output-header .title {
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  .output-header .subtitle {
+    font-size: 10px;
+    color: var(--mid);
+    font-family: 'Space Mono', monospace;
+    margin-top: 1px;
+  }
+
+  .copy-btn {
+    background: var(--coral);
+    color: white;
+    border: none;
+    border-radius: 9px;
+    padding: 9px 16px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s;
+    -webkit-tap-highlight-color: transparent;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .copy-btn:active { transform: scale(0.95); }
+
+  .copy-btn.copied {
+    background: var(--green);
+  }
+
+  .checklist-text {
+    padding: 14px 16px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11.5px;
+    line-height: 1.85;
+    color: #2a3550;
+    white-space: pre-wrap;
+    word-break: break-word;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .instructions {
+    padding: 12px 16px;
+    font-size: 12px;
+    color: var(--mid);
+    background: #f8f9fc;
+    line-height: 1.5;
+  }
+
+  .instructions strong {
+    color: var(--navy);
+  }
+
+  /* How-to banner */
+  .howto {
+    margin: 10px 14px 0;
+    background: #EDF4EE;
+    border-radius: 12px;
+    padding: 12px 14px;
+    border-left: 4px solid var(--sage);
+    font-size: 12.5px;
+    line-height: 1.6;
+    color: #2a4a2e;
+  }
+  .howto strong { font-weight: 700; }
+
+  .step-num {
+    display: inline-block;
+    background: var(--sage);
+    color: white;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 18px;
+    font-size: 11px;
+    font-weight: 700;
+    margin-right: 5px;
+    flex-shrink: 0;
+  }
+
+  .step { display: flex; align-items: flex-start; margin-bottom: 5px; }
+  .step:last-child { margin-bottom: 0; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🔧 Symphony Tech Tool</h1>
+  <p>Diagnostic Checklist Copy Tool — Tap issue → Copy → Paste into AppFolio</p>
+</header>
+
+<!-- How-to steps -->
+<div class="howto">
+  <div class="step"><span class="step-num">1</span><span>Tap the issue type below</span></div>
+  <div class="step"><span class="step-num">2</span><span>Press <strong>COPY TEXT</strong> — the full checklist copies to your clipboard</span></div>
+  <div class="step"><span class="step-num">3</span><span>Go to AppFolio → open the work order → tap in the Notes/Comments box → <strong>hold and Paste</strong></span></div>
+  <div class="step"><span class="step-num">4</span><span>Fill in each blank line with your findings, then hit <strong>Work Done</strong></span></div>
+</div>
+
+<div class="section-label">Select Issue Type</div>
+
+<div class="issue-grid">
+  <button class="issue-btn" onclick="select('refrigerator')" id="btn-refrigerator">
+    <span class="icon">🧊</span>
+    <span class="label">Refrigerator</span>
+  </button>
+  <button class="issue-btn" onclick="select('dishwasher')" id="btn-dishwasher">
+    <span class="icon">🫧</span>
+    <span class="label">Dishwasher</span>
+  </button>
+  <button class="issue-btn" onclick="select('oven')" id="btn-oven">
+    <span class="icon">🔥</span>
+    <span class="label">Oven / Range</span>
+  </button>
+  <button class="issue-btn" onclick="select('washer')" id="btn-washer">
+    <span class="icon">🌀</span>
+    <span class="label">Washer</span>
+  </button>
+  <button class="issue-btn" onclick="select('dryer')" id="btn-dryer">
+    <span class="icon">💨</span>
+    <span class="label">Dryer</span>
+  </button>
+  <button class="issue-btn" onclick="select('hvac')" id="btn-hvac">
+    <span class="icon">❄️</span>
+    <span class="label">HVAC / AC</span>
+  </button>
+</div>
+
+<!-- Output -->
+<div class="output-section" id="output">
+  <div class="output-card">
+    <div class="output-header">
+      <div>
+        <div class="title" id="output-title">Checklist</div>
+        <div class="subtitle">SELECT ALL TEXT → COPY → PASTE INTO APPFOLIO NOTES</div>
+      </div>
+      <button class="copy-btn" id="copy-btn" onclick="copyText()">📋 COPY TEXT</button>
+    </div>
+    <div class="checklist-text" id="checklist-text"></div>
+    <div class="instructions">
+      <strong>After pasting:</strong> Fill in each line. Add photos directly in AppFolio before submitting. Do NOT hit "Work Done" until all fields are complete.
+    </div>
+  </div>
+</div>
+
+<script>
+const GENERAL = `========================================
+GENERAL INFORMATION (All Work Orders)
+========================================
+Date & Time of Arrival: _______________
+Unit Number / Property Address: ________
+Resident-Reported Issue: _______________
+Technician's Initial Observations: ____
+___________________________________
+Brand: ___________ Model: ____________
+Serial Number: ________________________
+Age of Unit (approx): _________________
+Condition of Unit: ____________________
+Safety Concerns (if any): _____________
+Tools Used: ___________________________
+Was issue replicated? YES / NO
+Notes: ________________________________`;
+
+const CHECKLISTS = {
+  refrigerator: {
+    title: "🧊 Refrigerator Checklist",
+    text: `REFRIGERATOR DIAGNOSTIC CHECKS
+==============================
+Temperature Reading (fridge): _________
+Temperature Reading (freezer): ________
+Compressor Running? YES / NO
+Condenser Coil Condition: _____________
+Evaporator Fan Operating? YES / NO
+Frost Pattern (normal/abnormal): ______
+Door Seals (good/damaged): ____________
+Water/Ice Maker Function: _____________
+
+REQUIRED PHOTOS (add in AppFolio):
+[ ] Full unit view
+[ ] Model/serial tag
+[ ] Overall condition
+[ ] Visible damage
+[ ] Before photo (before repair)
+[ ] After photo (after repair)
+[ ] Error codes (if any)
+[ ] Interior condition
+[ ] Leaks (if any)
+[ ] Damaged components (if any)
+
+TECHNICIAN: ___________________________
+DATE: _________________________________`
+  },
+  dishwasher: {
+    title: "🫧 Dishwasher Checklist",
+    text: `DISHWASHER DIAGNOSTIC CHECKS
+=============================
+Water Fill Level (correct/low/high): __
+Heating Element (working/failed): _____
+Spray Arm Rotation (free/blocked): ____
+Drain Pump (operating/failed): ________
+Filter Condition (clean/clogged): _____
+Error Codes Displayed: ________________
+
+REQUIRED PHOTOS (add in AppFolio):
+[ ] Full unit view
+[ ] Model/serial tag
+[ ] Overall condition
+[ ] Visible damage
+[ ] Before photo
+[ ] After photo
+[ ] Error codes (if any)
+[ ] Interior condition
+[ ] Leaks (if any)
+[ ] Damaged components (if any)
+
+TECHNICIAN: ___________________________
+DATE: _________________________________`
+  },
+  oven: {
+    title: "🔥 Oven / Range Checklist",
+    text: `OVEN / RANGE DIAGNOSTIC CHECKS
+==============================
+Unit Type: GAS / ELECTRIC
+Igniter Amperage (gas): _______________
+Heating Element Continuity (electric): _
+Burner Flame Color (blue/yellow/none): _
+Temperature Accuracy: _________________
+Control Board Response: _______________
+
+REQUIRED PHOTOS (add in AppFolio):
+[ ] Full unit view
+[ ] Model/serial tag
+[ ] Overall condition
+[ ] Visible damage
+[ ] Before photo
+[ ] After photo
+[ ] Error codes (if any)
+[ ] Interior condition
+[ ] Damaged components (if any)
+
+TECHNICIAN: ___________________________
+DATE: _________________________________`
+  },
+  washer: {
+    title: "🌀 Washer Checklist",
+    text: `WASHER DIAGNOSTIC CHECKS
+========================
+Water Fill Level (correct/low/high): __
+Agitation Working? YES / NO
+Spin Cycle Working? YES / NO
+Drain Pump (operating/failed): ________
+Belt Condition (good/worn/broken): ____
+Error Codes Displayed: ________________
+Balance Issues Noted? YES / NO
+
+REQUIRED PHOTOS (add in AppFolio):
+[ ] Full unit view
+[ ] Model/serial tag
+[ ] Overall condition
+[ ] Visible damage
+[ ] Before photo
+[ ] After photo
+[ ] Error codes (if any)
+[ ] Interior condition
+[ ] Leaks (if any)
+[ ] Damaged components (if any)
+
+TECHNICIAN: ___________________________
+DATE: _________________________________`
+  },
+  dryer: {
+    title: "💨 Dryer Checklist",
+    text: `DRYER DIAGNOSTIC CHECKS
+=======================
+Airflow Test Result: __________________
+Heating Element / Igniter: ____________
+Drum Rotation (smooth/noisy/stopped): _
+Lint Buildup (none/moderate/heavy): ___
+Thermostat Continuity: ________________
+Thermal Fuse Continuity: ______________
+
+REQUIRED PHOTOS (add in AppFolio):
+[ ] Full unit view
+[ ] Model/serial tag
+[ ] Overall condition
+[ ] Visible damage
+[ ] Before photo
+[ ] After photo
+[ ] Lint trap / vent condition
+[ ] Damaged components (if any)
+
+TECHNICIAN: ___________________________
+DATE: _________________________________`
+  },
+  hvac: {
+    title: "❄️ HVAC / AC Checklist",
+    text: `HVAC / AC SYSTEM INFORMATION
+============================
+System Type: _________________________
+Brand: ___________ Model: ____________
+Serial Number: ________________________
+Thermostat Settings: __________________
+Outdoor Temperature: __________________
+
+ELECTRICAL CHECKS
+-----------------
+Breaker Status (on/tripped): __________
+Contactor Condition: __________________
+Capacitor Reading (µF): _______________
+Voltage Reading: ______________________
+Wiring Condition: _____________________
+
+AIRFLOW & MECHANICAL
+--------------------
+Filter Condition (clean/dirty/replace): 
+Blower Motor (operating/failed): ______
+Evaporator Coil (clean/dirty/frozen): _
+Condenser Coil Condition: _____________
+Fan Blade Condition: __________________
+Duct Issues Noted: ____________________
+
+REFRIGERANT SYSTEM
+------------------
+Suction Pressure: _____________________
+Discharge Pressure: ___________________
+Superheat Reading: ____________________
+Subcool Reading: ______________________
+Leak Signs (yes/no/location): _________
+Temperature Split: ____________________
+
+DRAINAGE
+--------
+Condensate Line Clear? YES / NO
+
+REQUIRED PHOTOS (add in AppFolio):
+[ ] Outdoor condenser unit
+[ ] Indoor air handler
+[ ] Capacitor readings
+[ ] Pressure gauge readings
+[ ] Filter condition
+[ ] Coil condition
+[ ] Condensate drain/pan
+[ ] Burnt wiring (if any)
+[ ] Ice buildup (if any)
+[ ] Temperature split reading
+[ ] Full unit view
+[ ] Model/serial tag
+[ ] Before photo
+[ ] After photo
+
+TECHNICIAN: ___________________________
+DATE: _________________________________`
+  }
+};
+
+let currentKey = null;
+
+function select(key) {
+  // Reset all buttons
+  document.querySelectorAll('.issue-btn').forEach(b => b.classList.remove('selected'));
+  document.getElementById('btn-' + key).classList.add('selected');
+
+  currentKey = key;
+  const data = CHECKLISTS[key];
+
+  const fullText = GENERAL + '\n\n' + data.text;
+  document.getElementById('output-title').textContent = data.title;
+  document.getElementById('checklist-text').textContent = fullText;
+  document.getElementById('output').classList.add('visible');
+
+  // Reset copy button
+  const btn = document.getElementById('copy-btn');
+  btn.textContent = '📋 COPY TEXT';
+  btn.classList.remove('copied');
+
+  // Scroll to output
+  setTimeout(() => {
+    document.getElementById('output').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 100);
+}
+
+function copyText() {
+  const text = document.getElementById('checklist-text').textContent;
+  const btn = document.getElementById('copy-btn');
+
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = '✅ COPIED!';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = '📋 COPY TEXT';
+        btn.classList.remove('copied');
+      }, 3000);
+    });
+  } else {
+    // Fallback for older phones
+    const el = document.createElement('textarea');
+    el.value = text;
+    el.style.position = 'fixed';
+    el.style.left = '-9999px';
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
+    btn.textContent = '✅ COPIED!';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = '📋 COPY TEXT';
+      btn.classList.remove('copied');
+    }, 3000);
+  }
+}
+</script>
+</body>
+</html>
