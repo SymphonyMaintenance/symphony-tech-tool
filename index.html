@@ -473,6 +473,52 @@ REQUIRED PHOTOS (add in AppFolio):
   }
 };
 
+const CONCLUSION = `
+
+========================================
+TECHNICIAN CONCLUSION & RECOMMENDED ACTION
+========================================
+NOTE: This section must be completed before
+marking work done. "Unit is old" is NOT an
+acceptable conclusion. Be specific.
+----------------------------------------
+
+ROOT CAUSE OF ISSUE:
+
+
+WHAT WAS REPAIRED (if completed today):
+
+
+PARTS REPLACED (include part name & reason):
+
+
+PARTS TO BE ORDERED (include part name & reason):
+
+
+WHAT WAS CLEANED OR ADJUSTED:
+
+
+RESIDENT ADVISORY
+(What should the resident do or avoid to
+prevent this issue from recurring?):
+
+
+RESIDENT-CAUSED DAMAGE? YES / NO
+If YES -- describe cause and list any
+applicable charges:
+
+
+FOLLOW-UP REQUIRED? YES / NO
+If YES -- describe what still needs to be done
+and estimated timeline:
+
+
+OVERALL STATUS:
+[ ] Issue fully resolved
+[ ] Partial repair -- follow-up needed
+[ ] Parts ordered -- awaiting return visit
+[ ] Requires supervisor review before proceeding`;
+
 let currentKey = null;
 
 function select(key) {
@@ -483,7 +529,7 @@ function select(key) {
   currentKey = key;
   const data = CHECKLISTS[key];
 
-  const fullText = GENERAL + '\n\n' + data.text;
+  const fullText = GENERAL + '\n\n' + data.text + CONCLUSION;
   document.getElementById('output-title').textContent = data.title;
   document.getElementById('checklist-text').textContent = fullText;
   document.getElementById('output').classList.add('visible');
