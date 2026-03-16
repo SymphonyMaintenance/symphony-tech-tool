@@ -286,10 +286,10 @@ Technician's Initial Observations:
 Brand:
 Model:
 Serial Number:
-Age of Unit (approx):
+Age of Unit:
 Condition of Unit:
 Safety Concerns (if any):
-Tools Used:
+Were any pets observed? YES / NO
 Was issue replicated? YES / NO
 Notes:`;
 
@@ -298,8 +298,8 @@ const CHECKLISTS = {
     title: "🧊 Refrigerator Checklist",
     text: `REFRIGERATOR DIAGNOSTIC CHECKS
 ==============================
-Temperature Reading (fridge):
-Temperature Reading (freezer):
+Temperature Reading (fridge) ~37°F:
+Temperature Reading (freezer) ~0°F:
 Compressor Running? YES / NO
 Condenser Coil Condition:
 Evaporator Fan Operating? YES / NO
@@ -418,11 +418,9 @@ REQUIRED PHOTOS (add in AppFolio):
     text: `HVAC / AC SYSTEM INFORMATION
 ============================
 System Type:
-Brand:
-Model:
-Serial Number:
 Thermostat Settings:
 Outdoor Temperature:
+Tools Used:
 
 ELECTRICAL CHECKS
 -----------------
@@ -443,12 +441,14 @@ Duct Issues Noted:
 
 REFRIGERANT SYSTEM
 ------------------
-Suction Pressure:
-Discharge Pressure:
+Ranges below are guidelines for R-410A:
+Low Side / Suction Pressure (~115 to 125 PSI):
+High Side / Discharge Pressure (~330 to 345 PSI):
 Superheat Reading:
 Subcool Reading:
+Superheat & Subcool Difference (max ~15°F difference):
 Leak Signs (yes/no/location):
-Temperature Split:
+Temperature Split (Normal Range: 20° - 22°F):
 
 DRAINAGE
 --------
